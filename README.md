@@ -1,2 +1,2 @@
 # somar_xml
-Script criado para totalizar vendas usando xml de NFe ou NFCe, exportados por período 
+Script criado para totalizar vendas de um periodo usando xml de NFe ou NFCe, exportados.

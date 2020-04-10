@@ -16,43 +16,43 @@
     <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
    </head>
 	<body> 
-	<div class="container" style="width: 60%;border: 1px solid #ccc; margin-top: 15px; margin-bottom: 20px; background: #fff;">
+	<div class="container" id="container">
 
-					<table id="example" class="table table-striped " cellspacing="0" width="100%">
-                        	<thead>
-							<tr class="primary">
-								<th width="20"><strong>Data</strong></th>
-								<th width="20"><strong>NFCe</strong></th>
-								<th width="20"><strong>Valor R$</strong></th>
-							</tr>
-                        </thead>
-                     <tbody>
+		<table id="example" class="table table-striped " cellspacing="0" width="100%">
+            <thead>
+				<tr class="primary">
+					<th width="20"><strong>Data</strong></th>
+					<th width="20"><strong>NFCe</strong></th>
+					<th width="20"><strong>Valor R$</strong></th>
+				</tr>
+            </thead>
+            <tbody>
 <?php
 error_reporting(0);
 
 $path = "xml/";
 $diretorio = dir($path);
-while($arquivo = $diretorio -> read()){
+while($arquivo = $diretorio->read()){
    
                 $DOMDocument = new DOMDocument( '1.0', 'UTF-8' );
                 $DOMDocument->preserveWhiteSpace = false;
                 $DOMDocument->load( $path.$arquivo );
 
-                $products     = $DOMDocument->getElementsByTagName( 'ICMSTot' );
-                $ides            = $DOMDocument->getElementsByTagName( 'ide' );
+                $products   = $DOMDocument->getElementsByTagName( 'ICMSTot' );
+                $ides       = $DOMDocument->getElementsByTagName( 'ide' );
                 $cancelados = $DOMDocument->getElementsByTagName( 'retEvento' );
-                $chaves       = $DOMDocument->getElementsByTagName( 'infProt' );
+                $chaves     = $DOMDocument->getElementsByTagName( 'infProt' );
 
                 foreach( $cancelados as $cancelado ) {
                     $canc_nfe[] = $cancelado->getElementsByTagName('chNFe')->item(0)->nodeValue;
                 }
 
                 foreach( $chaves as $chave ) {
-                $chave_nfe[] = $chave->getElementsByTagName('chNFe')->item(0)->nodeValue;
+                    $chave_nfe[] = $chave->getElementsByTagName('chNFe')->item(0)->nodeValue;
                 }
 
                 foreach( $products as $product ) {
-                        $vlnfe[] = $product->getElementsByTagName('vNF')->item(0)->nodeValue;
+                    $vlnfe[] = $product->getElementsByTagName('vNF')->item(0)->nodeValue;
                 }
 
                 foreach( $ides as $ide ) {
@@ -71,7 +71,7 @@ while($arquivo = $diretorio -> read()){
                         if (in_array($chv, $canc_nfe)){
                             $valor = '0';
                             $texto = ' - Cancelada';
-                            $estilo = "style='color: red'";
+                            $estilo = "id='nf-info-cancel'";
                         }else{
                             $valor = $vlnfe[$i];
                             $texto = '';
@@ -89,9 +89,9 @@ echo "<h2>Valor total das notas: <strong>R$ " . number_format($total, 2, ',', '.
 echo "<hr>";
 echo "<table cellspacing=\"10\" width=\"100%\" style='margin: 10px 0 10px 0'>";
 echo "<tr>";
-echo "<td width=\"20\" style=\"border: 1px solid #ccc; margin: 5px; padding: 5px;\">Total de: <strong>".$contador." Nota(s)</strong></td>";
-echo "<td width=\"20\" style=\"border: 1px solid #ccc;margin: 5px; padding: 5px;\">Total de Notas canceladas: <strong>" . count($canc_nfe). " Nota(s)</strong></td>";
-echo "<td width=\"20\" style=\"border: 1px solid #ccc;margin: 5px; padding: 5px;\">Valor total das notas: <strong>R$ " . number_format($total, 2, ',', '.')."</strong></td>";
+echo "<td width=\"20\" id=\"footer-tabela\">Total de: <strong>".$contador." Nota(s)</strong></td>";
+echo "<td width=\"20\" id=\"footer-tabela\">Total de Notas canceladas: <strong>" . count($canc_nfe). " Nota(s)</strong></td>";
+echo "<td width=\"20\" id=\"footer-tabela\">Valor total das notas: <strong>R$ " . number_format($total, 2, ',', '.')."</strong></td>";
 echo "</tr>";
 echo "</table>";
 $diretorio -> close(); 

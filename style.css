@@ -1,0 +1,15 @@
+#container{
+  width: 60%;
+  border: 1px solid #ccc; 
+  margin-top: 15px; 
+  margin-bottom: 20px; 
+  background: #fff;
+}
+#footer-tabela{
+  border: 1px solid #ccc; 
+  margin: 5px; 
+  padding: 5px;
+}
+#nf-info-cancel{
+  color: red;
+}
